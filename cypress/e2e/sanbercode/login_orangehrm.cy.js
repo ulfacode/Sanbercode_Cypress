@@ -43,39 +43,43 @@ context('Login', () => {
       cy.get(':nth-child(3) > .oxd-input-group > .oxd-text').should("be.visible").contains("Required")
     })
 
-    it('wrong username and password', () => {
+    it.only('wrong username and password', () => {
       cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').clear().type('Admin123')
       cy.get('input[placeholder="Password"]').clear().type('Admin')
+      cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/core/i18n/messages').as('login')
       cy.get('button[type="submit"]').click()
-        
+      cy.wait('@login')
       cy.get('.oxd-alert-content > .oxd-text').should('be.visible').contains('Invalid credentials')
     })
 
-    it('wrong username and right password', () => {
+    it.only('wrong username and right password', () => {
       cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
 
       cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').clear().type('Admin123')
       cy.get('input[placeholder="Password"]').clear().type('admin123')
+      cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/core/i18n/messages').as('login')
       cy.get('button[type="submit"]').click()
-        
+      cy.wait('@login')        
       cy.get('.oxd-alert-content > .oxd-text').should('be.visible').contains('Invalid credentials')
     })
 
-    it('right username and wrong password', () => {
+    it.only('right username and wrong password', () => {
       cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
 
       cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').clear().type('Admin')
       cy.get('input[placeholder="Password"]').clear().type('Admin123')
+      cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/core/i18n/messages').as('login')
       cy.get('button[type="submit"]').click()
-        
+      cy.wait('@login')        
       cy.get('.oxd-alert-content > .oxd-text').should('be.visible').contains('Invalid credentials')
     })
 
-    it('valid login', () => {
+    it.only('valid login', () => {
       cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').clear().type('Admin')
       cy.get('input[placeholder="Password"]').clear().type('admin123')
+      cy.intercept('GET', 'https://opensource-demo.orangehrmlive.com/web/index.php/core/i18n/messages').as('login')
       cy.get('button[type="submit"]').click()
-        
+      cy.wait('@login')        
       cy.get('.oxd-topbar-header-breadcrumb > .oxd-text').should('be.visible')
       cy.url().should('eq', 'https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index')
     })
