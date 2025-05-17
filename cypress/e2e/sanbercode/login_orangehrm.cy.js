@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-
+//intercept
 context('Login', () => {
     beforeEach(() => {
       cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
