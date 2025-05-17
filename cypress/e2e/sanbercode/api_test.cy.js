@@ -9,7 +9,12 @@ describe('Reqres.in API Automation Test', () => {
   });
 
   it('GET - List Users', () => {
-    cy.request('GET', `${baseUrl}/users?page=2`)
+    cy.request({ 
+      method: 'GET', 
+      url: `${baseUrl}/users?page=2`,
+      headers: headers,
+    }
+    )
       .should((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.have.property('data');
@@ -17,7 +22,12 @@ describe('Reqres.in API Automation Test', () => {
   });
 
   it('GET - Single User', () => {
-    cy.request('GET', `${baseUrl}/users/2`)
+    cy.request({ 
+      method: 'GET', 
+      url: `${baseUrl}/users/2`,
+      headers: headers,
+    }
+    )
       .should((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.data).to.have.property('id', 2);
